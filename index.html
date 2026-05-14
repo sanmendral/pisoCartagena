@@ -10,6 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <div class="bg-layer bg-sun" aria-hidden="true"></div>
+  <div class="bg-layer bg-sand" aria-hidden="true"></div>
+  <div class="bg-layer bg-sea" aria-hidden="true"></div>
+
   <header class="site-header">
     <div class="container header-row">
       <div class="brand">
@@ -94,7 +98,12 @@
             <input type="text" name="lead_doc_number" required />
           </label>
           <label class="dni-only">
-            <span data-i18n="f_doc_support">Support number</span>
+            <span>
+              <span data-i18n="f_doc_support">Support number</span>
+              <button type="button" class="help-btn" id="support-help-btn"
+                      aria-label="Where to find the support number"
+                      data-i18n-aria="support_help_aria">?</button>
+            </span>
             <input type="text" name="lead_doc_support" placeholder="e.g. ABC123456" />
           </label>
         </div>
@@ -243,6 +252,21 @@
       </div>
     </div>
   </template>
+
+  <!-- Support-number help modal -->
+  <div class="modal" id="support-modal" role="dialog" aria-modal="true"
+       aria-labelledby="support-modal-title" hidden>
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-panel" role="document">
+      <button type="button" class="modal-close" data-modal-close aria-label="Close">×</button>
+      <h3 id="support-modal-title" data-i18n="support_help_title">Where to find the support number</h3>
+      <img src="DNI_support_number.png" alt=""
+           data-i18n-alt="support_help_alt" />
+      <p class="modal-caption" data-i18n="support_help_caption">
+        The support number is printed on your DNI / NIE card — usually below the document number.
+      </p>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

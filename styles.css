@@ -37,7 +37,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -2;
+  z-index: -10;
   pointer-events: none;
   background-color: var(--bg);
   background-image:
@@ -48,19 +48,47 @@ body::before {
     radial-gradient(ellipse 60% 45% at 80% 95%, rgba(247, 220, 178, 0.6)  0%, rgba(247, 220, 178, 0) 70%);
 }
 
-/* Decorative beach motif: sea waves upper-right, sand grains lower-left,
-   soft sun. Sits between the gradient and the page content. */
-body::after {
-  content: "";
+/* Parallax beach layers — sun (fixed in viewport), sand (slow-scroll),
+   sea (pinned to bottom of viewport). */
+.bg-layer {
   position: fixed;
-  inset: 0;
-  z-index: -1;
   pointer-events: none;
-  background-image: url("decoration.svg");
-  background-size: cover;
-  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bg-sun {
+  inset: 0;
+  z-index: -3;
+  background-image: url("sun.svg");
+  background-size: 480px 480px;
+  background-position: calc(100% + 60px) -60px;
   background-repeat: no-repeat;
   opacity: 0.95;
+  will-change: transform;
+}
+
+.bg-sand {
+  inset: 0;
+  z-index: -2;
+  background-image: url("sand.svg");
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  opacity: 0.85;
+}
+
+.bg-sea {
+  left: 40%;
+  right: 0;
+  bottom: 0;
+  height: 45vh;
+  z-index: -1;
+  background-image: url("sea.svg");
+  background-size: 100% 100%;
+  background-position: center bottom;
+  opacity: 0.9;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%, black 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 25%, black 100%);
 }
 
 .container {
@@ -335,6 +363,90 @@ input:invalid:not(:placeholder-shown):not(:focus) {
 }
 .status.ok { color: var(--ok); }
 .status.err { color: var(--danger); }
+
+/* Help button (small "?" next to a label) */
+.help-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: all 0.15s ease;
+}
+.help-btn:hover {
+  color: var(--accent-dark);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal[hidden] { display: none; }
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(31, 41, 51, 0.55);
+}
+.modal-panel {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+}
+.modal-panel h3 {
+  margin: 0 0 14px;
+  font-size: 1.1rem;
+  padding-right: 32px;
+}
+.modal-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+}
+.modal-caption {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 4px 8px;
+}
+.modal-close:hover { color: var(--ink); }
 
 /* ============ Footer ============ */
 .site-footer {

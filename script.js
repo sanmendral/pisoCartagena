@@ -41,6 +41,11 @@ const I18N = {
     f_doc_number: "Document number",
     f_doc_expedition: "Document issue date",
     f_doc_support: "Support number",
+    support_help_aria: "Where to find the support number",
+    support_help_title: "Where to find the support number",
+    support_help_alt: "Diagram showing the support number location on a DNI card",
+    support_help_caption:
+      "The support number is printed on your DNI / NIE card — usually below the document number.",
     f_relationship: "Relationship to lead guest",
 
     sub_address: "Address",
@@ -134,6 +139,11 @@ const I18N = {
     f_doc_number: "Número de documento",
     f_doc_expedition: "Fecha de expedición",
     f_doc_support: "Número de soporte",
+    support_help_aria: "Dónde encontrar el número de soporte",
+    support_help_title: "Dónde encontrar el número de soporte",
+    support_help_alt: "Diagrama que muestra la ubicación del número de soporte en el DNI",
+    support_help_caption:
+      "El número de soporte está impreso en su DNI / NIE — normalmente debajo del número de documento.",
     f_relationship: "Parentesco con el huésped principal",
 
     sub_address: "Dirección",
@@ -227,6 +237,11 @@ const I18N = {
     f_doc_number: "Numéro de document",
     f_doc_expedition: "Date de délivrance",
     f_doc_support: "Numéro de support",
+    support_help_aria: "Où trouver le numéro de support",
+    support_help_title: "Où trouver le numéro de support",
+    support_help_alt: "Schéma indiquant l'emplacement du numéro de support sur la carte DNI",
+    support_help_caption:
+      "Le numéro de support est imprimé sur votre carte DNI / NIE — généralement sous le numéro de document.",
     f_relationship: "Lien avec le voyageur principal",
 
     sub_address: "Adresse",
@@ -300,6 +315,14 @@ function applyLang(lang) {
     const key = el.getAttribute("data-i18n");
     if (dict[key] !== undefined) el.textContent = dict[key];
   });
+  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-aria");
+    if (dict[key] !== undefined) el.setAttribute("aria-label", dict[key]);
+  });
+  document.querySelectorAll("[data-i18n-alt]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-alt");
+    if (dict[key] !== undefined) el.setAttribute("alt", dict[key]);
+  });
 
   document.querySelectorAll(".lang-btn").forEach((b) => {
     b.classList.toggle("active", b.dataset.lang === lang);
@@ -358,6 +381,27 @@ function syncSupportField() {
 }
 document.querySelector('select[name="lead_doc_type"]').addEventListener("change", syncSupportField);
 syncSupportField();
+
+// ---------- Support-number help modal ----------
+const supportModal = document.getElementById("support-modal");
+const supportHelpBtn = document.getElementById("support-help-btn");
+
+function openSupportModal() {
+  supportModal.hidden = false;
+  document.body.style.overflow = "hidden";
+}
+function closeSupportModal() {
+  supportModal.hidden = true;
+  document.body.style.overflow = "";
+}
+
+supportHelpBtn.addEventListener("click", openSupportModal);
+supportModal.querySelectorAll("[data-modal-close]").forEach((el) => {
+  el.addEventListener("click", closeSupportModal);
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !supportModal.hidden) closeSupportModal();
+});
 
 // ---------- CSV generation ----------
 function csvEscape(value) {
@@ -437,3 +481,27 @@ form.addEventListener("submit", async (e) => {
     submitBtn.querySelector("span").textContent = dict.submit;
   }
 });
+
+// ---------- Parallax: sun drifts up slowly and disappears; sand & sea
+// stay pinned to the bottom (no transform → never repeats, never shows
+// a seam from the low-density top of the sand image). ----------
+const sunLayer = document.querySelector(".bg-sun");
+const seaLayer = document.querySelector(".bg-sea");
+const SEA_MIN_VH = 45;
+const SEA_MAX_VH = 75;
+const SEA_GROW_SCROLL = 800; // px of scroll to reach max stretch
+let parallaxTicking = false;
+function updateParallax() {
+  const y = window.scrollY || window.pageYOffset;
+  sunLayer.style.transform = `translateY(${-y * 0.5}px)`;
+  const t = Math.min(y / SEA_GROW_SCROLL, 1);
+  seaLayer.style.height = `${SEA_MIN_VH + (SEA_MAX_VH - SEA_MIN_VH) * t}vh`;
+  parallaxTicking = false;
+}
+window.addEventListener("scroll", () => {
+  if (!parallaxTicking) {
+    requestAnimationFrame(updateParallax);
+    parallaxTicking = true;
+  }
+}, { passive: true });
+updateParallax();
