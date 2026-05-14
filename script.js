@@ -521,7 +521,7 @@ const SUN_MAX = 380, SUN_MIN = 120, SUN_SHRINK = 250, SUN_CORE_OFFSET = 95;
 let parallaxTicking = false;
 function updateParallax() {
   const y = window.scrollY || window.pageYOffset;
-  sunLayer.style.transform = `translateY(${-y * 0.5}px)`;
+  sunLayer.style.transform = `translateY(${-y * 0.2}px)`;
   const tsun = Math.min(y / SUN_SHRINK, 1);
   const sunSize = SUN_MAX - (SUN_MAX - SUN_MIN) * tsun;
   const sunOff = sunSize / 2 - SUN_CORE_OFFSET;
