@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="page_title">Guest Registration — Apartment in Spain</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <div class="brand">
+        <span class="brand-mark">🏛️</span>
+        <span class="brand-name" data-i18n="brand">Sandra's Apartment</span>
+      </div>
+      <nav class="lang-switch" aria-label="Language">
+        <button type="button" class="lang-btn active" data-lang="en">EN</button>
+        <button type="button" class="lang-btn" data-lang="es">ES</button>
+        <button type="button" class="lang-btn" data-lang="fr">FR</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1 data-i18n="hero_title">Welcome — Guest Registration</h1>
+      <p class="lead" data-i18n="hero_lead">
+        To comply with Spanish law (Real Decreto 933/2021), we need a few details
+        from each guest before your arrival. Your information is sent securely and
+        used only for the legally required traveler registration.
+      </p>
+      <p class="hero-meta">
+        <span class="badge" data-i18n="badge_secure">🔒 Secure</span>
+        <span class="badge" data-i18n="badge_time">⏱️ Takes ~5 minutes</span>
+        <span class="badge" data-i18n="badge_legal">⚖️ Legally required</span>
+      </p>
+    </div>
+  </section>
+
+  <main class="container">
+    <form id="registration-form" novalidate>
+      <!-- ====== STAY DETAILS ====== -->
+      <fieldset>
+        <legend data-i18n="sec_stay">Stay details</legend>
+
+        <div class="grid-2">
+          <label>
+            <span data-i18n="f_num_guests">Number of guests</span>
+            <input type="number" name="num_guests" min="1" max="20" value="1" required />
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- ====== LEAD GUEST ====== -->
+      <fieldset>
+        <legend data-i18n="sec_lead">Lead guest (the person booking)</legend>
+
+        <div class="grid-2">
+          <label>
+            <span data-i18n="f_first_name">First name</span>
+            <input type="text" name="lead_first_name" required autocomplete="given-name" />
+          </label>
+          <label>
+            <span data-i18n="f_last_name">Last name</span>
+            <input type="text" name="lead_last_name" required autocomplete="family-name" />
+          </label>
+          <label>
+            <span data-i18n="f_second_last_name">Second last name <em data-i18n="optional">(optional)</em></span>
+            <input type="text" name="lead_second_last_name" autocomplete="family-name" />
+          </label>
+          <label>
+            <span data-i18n="f_gender">Gender</span>
+            <select name="lead_gender" required>
+              <option value="" data-i18n="opt_choose">Choose…</option>
+              <option value="F" data-i18n="opt_female">Female</option>
+              <option value="M" data-i18n="opt_male">Male</option>
+              <option value="O" data-i18n="opt_other">Other</option>
+            </select>
+          </label>
+          <label>
+            <span data-i18n="f_birth_date">Date of birth</span>
+            <input type="date" name="lead_birth_date" required autocomplete="bday" />
+          </label>
+          <label>
+            <span data-i18n="f_nationality">Nationality</span>
+            <input type="text" name="lead_nationality" required placeholder="e.g. Spanish, French, British" />
+          </label>
+          <label>
+            <span data-i18n="f_doc_type">Document type</span>
+            <select name="lead_doc_type" required>
+              <option value="" data-i18n="opt_choose">Choose…</option>
+              <option value="DNI" data-i18n="opt_dni">DNI (Spanish ID)</option>
+              <option value="NIE" data-i18n="opt_nie">NIE (Foreigner ID)</option>
+              <option value="PASSPORT" data-i18n="opt_passport">Passport</option>
+              <option value="EU_ID" data-i18n="opt_eu_id">EU national ID card</option>
+            </select>
+          </label>
+          <label>
+            <span data-i18n="f_doc_number">Document number</span>
+            <input type="text" name="lead_doc_number" required />
+          </label>
+          <label>
+            <span data-i18n="f_doc_expedition">Document issue date</span>
+            <input type="date" name="lead_doc_expedition" required />
+          </label>
+          <label class="dni-only">
+            <span data-i18n="f_doc_support">Support number <em data-i18n="dni_only">(DNI/NIE only)</em></span>
+            <input type="text" name="lead_doc_support" placeholder="e.g. ABC123456" />
+          </label>
+        </div>
+
+        <h3 class="sub" data-i18n="sub_address">Address</h3>
+        <div class="grid-2">
+          <label class="span-2">
+            <span data-i18n="f_address">Street address</span>
+            <input type="text" name="lead_address" required autocomplete="street-address" />
+          </label>
+          <label>
+            <span data-i18n="f_city">City / Locality</span>
+            <input type="text" name="lead_city" required autocomplete="address-level2" />
+          </label>
+          <label>
+            <span data-i18n="f_postal">Postal code</span>
+            <input type="text" name="lead_postal_code" required autocomplete="postal-code" />
+          </label>
+          <label>
+            <span data-i18n="f_region">Region / Province</span>
+            <input type="text" name="lead_region" required autocomplete="address-level1" />
+          </label>
+          <label>
+            <span data-i18n="f_country">Country</span>
+            <input type="text" name="lead_country" required autocomplete="country-name" />
+          </label>
+        </div>
+
+        <h3 class="sub" data-i18n="sub_contact">Contact</h3>
+        <div class="grid-2">
+          <label>
+            <span data-i18n="f_email">Email</span>
+            <input type="email" name="lead_email" required autocomplete="email" />
+          </label>
+          <label>
+            <span data-i18n="f_mobile">Mobile phone</span>
+            <input type="tel" name="lead_mobile" required autocomplete="tel" placeholder="+34 ..." />
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- ====== ADDITIONAL GUESTS ====== -->
+      <fieldset>
+        <legend data-i18n="sec_others">Additional guests</legend>
+        <p class="help" data-i18n="others_help">
+          Add one entry per additional guest staying at the apartment (excluding yourself).
+          Spanish law requires this for every traveler aged 14 or over.
+        </p>
+
+        <div id="guests-container"></div>
+
+        <button type="button" id="add-guest" class="btn-secondary">
+          <span>+ </span><span data-i18n="add_guest">Add another guest</span>
+        </button>
+      </fieldset>
+
+      <!-- ====== CONSENT ====== -->
+      <fieldset>
+        <legend data-i18n="sec_consent">Consent</legend>
+        <label class="check">
+          <input type="checkbox" name="consent_legal" required />
+          <span data-i18n="consent_legal">
+            I confirm that the information provided is accurate and I consent to its
+            use for the legally required traveler registration under Real Decreto 933/2021.
+          </span>
+        </label>
+        <label class="check">
+          <input type="checkbox" name="consent_contact" required />
+          <span data-i18n="consent_contact">
+            I agree that the host may contact me at the email and phone provided regarding my stay.
+          </span>
+        </label>
+      </fieldset>
+
+      <!-- Web3Forms hidden fields -->
+      <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+      <input type="hidden" name="subject" value="New guest registration — Sandra's Apartment" />
+      <input type="hidden" name="from_name" value="Apartment Registration Form" />
+      <input type="hidden" name="redirect" value="false" />
+      <input type="checkbox" name="botcheck" class="hp-field" tabindex="-1" autocomplete="off" />
+
+      <!-- Filled by JS just before submit -->
+      <input type="hidden" name="csv_row" id="csv-row" />
+      <input type="hidden" name="csv_header" id="csv-header" />
+
+      <div class="actions">
+        <button type="submit" class="btn-primary" id="submit-btn">
+          <span data-i18n="submit">Submit registration</span>
+        </button>
+        <p id="form-status" class="status" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p data-i18n="footer">
+        © Sandra's Apartment · Information handled in accordance with the GDPR
+        and Spanish legislation on tourist rentals.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Hidden template for an extra guest (cloned by JS) -->
+  <template id="guest-template">
+    <div class="guest-card">
+      <div class="guest-card-head">
+        <h4><span data-i18n="guest">Guest</span> <span class="guest-num"></span></h4>
+        <button type="button" class="btn-remove" data-i18n="remove">Remove</button>
+      </div>
+      <div class="grid-2">
+        <label>
+          <span data-i18n="f_first_name">First name</span>
+          <input type="text" data-name="first_name" required />
+        </label>
+        <label>
+          <span data-i18n="f_last_name">Last name</span>
+          <input type="text" data-name="last_name" required />
+        </label>
+        <label>
+          <span data-i18n="f_gender">Gender</span>
+          <select data-name="gender" required>
+            <option value="" data-i18n="opt_choose">Choose…</option>
+            <option value="F" data-i18n="opt_female">Female</option>
+            <option value="M" data-i18n="opt_male">Male</option>
+            <option value="O" data-i18n="opt_other">Other</option>
+          </select>
+        </label>
+        <label>
+          <span data-i18n="f_birth_date">Date of birth</span>
+          <input type="date" data-name="birth_date" required />
+        </label>
+        <label>
+          <span data-i18n="f_nationality">Nationality</span>
+          <input type="text" data-name="nationality" required />
+        </label>
+        <label>
+          <span data-i18n="f_doc_type">Document type</span>
+          <select data-name="doc_type" required>
+            <option value="" data-i18n="opt_choose">Choose…</option>
+            <option value="DNI" data-i18n="opt_dni">DNI (Spanish ID)</option>
+            <option value="NIE" data-i18n="opt_nie">NIE (Foreigner ID)</option>
+            <option value="PASSPORT" data-i18n="opt_passport">Passport</option>
+            <option value="EU_ID" data-i18n="opt_eu_id">EU national ID card</option>
+          </select>
+        </label>
+        <label>
+          <span data-i18n="f_doc_number">Document number</span>
+          <input type="text" data-name="doc_number" required />
+        </label>
+        <label>
+          <span data-i18n="f_doc_expedition">Document issue date</span>
+          <input type="date" data-name="doc_expedition" required />
+        </label>
+        <label>
+          <span data-i18n="f_relationship">Relationship to lead guest <em data-i18n="if_minor">(if under 14)</em></span>
+          <input type="text" data-name="relationship" placeholder="e.g. son, daughter" />
+        </label>
+      </div>
+    </div>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
