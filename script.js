@@ -67,7 +67,7 @@ const I18N = {
     optional: "(optional)",
     dni_only: "(DNI/NIE only)",
     card_only: "(card only)",
-    if_minor: "(if under 14)",
+    if_minor: "(if 14 or younger)",
 
     opt_choose: "Choose…",
     opt_yes: "Yes",
@@ -165,7 +165,7 @@ const I18N = {
     optional: "(opcional)",
     dni_only: "(solo DNI/NIE)",
     card_only: "(solo tarjeta)",
-    if_minor: "(si es menor de 14)",
+    if_minor: "(si tiene 14 años o menos)",
 
     opt_choose: "Elegir…",
     opt_yes: "Sí",
@@ -263,7 +263,7 @@ const I18N = {
     optional: "(facultatif)",
     dni_only: "(DNI/NIE uniquement)",
     card_only: "(carte uniquement)",
-    if_minor: "(si moins de 14 ans)",
+    if_minor: "(si 14 ans ou moins)",
 
     opt_choose: "Choisir…",
     opt_yes: "Oui",
@@ -352,6 +352,30 @@ function renumberGuests() {
   });
 }
 
+function ageFromBirthDate(value) {
+  if (!value) return null;
+  const birth = new Date(value);
+  if (isNaN(birth)) return null;
+  const today = new Date();
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  return age;
+}
+
+function syncMinorField(card) {
+  const birthInput = card.querySelector('[data-name="birth_date"]');
+  const relWrapper = card.querySelector(".minor-only");
+  const relInput = relWrapper.querySelector("input");
+  const age = ageFromBirthDate(birthInput.value);
+  if (age !== null && age <= 14) {
+    relWrapper.classList.remove("hidden");
+  } else {
+    relWrapper.classList.add("hidden");
+    relInput.value = "";
+  }
+}
+
 function addGuest() {
   const node = guestTemplate.content.firstElementChild.cloneNode(true);
   guestsContainer.appendChild(node);
@@ -360,6 +384,9 @@ function addGuest() {
     node.remove();
     renumberGuests();
   });
+  const birthInput = node.querySelector('[data-name="birth_date"]');
+  birthInput.addEventListener("change", () => syncMinorField(node));
+  birthInput.addEventListener("input", () => syncMinorField(node));
   renumberGuests();
 }
 
@@ -487,15 +514,23 @@ form.addEventListener("submit", async (e) => {
 // a seam from the low-density top of the sand image). ----------
 const sunLayer = document.querySelector(".bg-sun");
 const seaLayer = document.querySelector(".bg-sea");
-const SEA_MIN_VH = 45;
-const SEA_MAX_VH = 75;
-const SEA_GROW_SCROLL = 800; // px of scroll to reach max stretch
+const sandLayer = document.querySelector(".bg-sand");
+const SEA_MIN_VH = 45, SEA_MAX_VH = 58, SEA_GROW = 900;
+const SAND_MIN_VH = 90, SAND_MAX_VH = 102, SAND_GROW = 1500;
+const SUN_MAX = 380, SUN_MIN = 120, SUN_SHRINK = 250, SUN_CORE_OFFSET = 95;
 let parallaxTicking = false;
 function updateParallax() {
   const y = window.scrollY || window.pageYOffset;
   sunLayer.style.transform = `translateY(${-y * 0.5}px)`;
-  const t = Math.min(y / SEA_GROW_SCROLL, 1);
-  seaLayer.style.height = `${SEA_MIN_VH + (SEA_MAX_VH - SEA_MIN_VH) * t}vh`;
+  const tsun = Math.min(y / SUN_SHRINK, 1);
+  const sunSize = SUN_MAX - (SUN_MAX - SUN_MIN) * tsun;
+  const sunOff = sunSize / 2 - SUN_CORE_OFFSET;
+  sunLayer.style.backgroundSize = `${sunSize}px ${sunSize}px`;
+  sunLayer.style.backgroundPosition = `right ${-sunOff}px top ${-sunOff}px`;
+  const ts = Math.min(y / SEA_GROW, 1);
+  seaLayer.style.height = `${SEA_MIN_VH + (SEA_MAX_VH - SEA_MIN_VH) * ts}vh`;
+  const td = Math.min(y / SAND_GROW, 1);
+  sandLayer.style.backgroundSize = `100% ${SAND_MIN_VH + (SAND_MAX_VH - SAND_MIN_VH) * td}vh`;
   parallaxTicking = false;
 }
 window.addEventListener("scroll", () => {

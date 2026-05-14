@@ -60,8 +60,8 @@ body::before {
   inset: 0;
   z-index: -3;
   background-image: url("sun.svg");
-  background-size: 480px 480px;
-  background-position: calc(100% + 60px) -60px;
+  background-size: 360px 360px;
+  background-position: right -85px top -85px;
   background-repeat: no-repeat;
   opacity: 0.95;
   will-change: transform;
