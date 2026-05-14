@@ -342,6 +342,23 @@ function addGuest() {
 
 addGuestBtn.addEventListener("click", addGuest);
 
+// ---------- Support number: required for DNI/NIE/EU_ID, hidden for PASSPORT ----------
+function syncSupportField() {
+  const docType = document.querySelector('select[name="lead_doc_type"]').value;
+  const wrapper = document.querySelector(".dni-only");
+  const input = wrapper.querySelector("input");
+  if (docType === "PASSPORT" || docType === "") {
+    wrapper.classList.add("hidden");
+    input.required = false;
+    input.value = "";
+  } else {
+    wrapper.classList.remove("hidden");
+    input.required = true;
+  }
+}
+document.querySelector('select[name="lead_doc_type"]').addEventListener("change", syncSupportField);
+syncSupportField();
+
 // ---------- CSV generation ----------
 function csvEscape(value) {
   const s = String(value ?? "");

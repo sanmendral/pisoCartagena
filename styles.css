@@ -251,6 +251,10 @@ input:invalid:not(:placeholder-shown):not(:focus) {
   flex-shrink: 0;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* Honeypot (hidden from users) */
 .hp-field {
   position: absolute !important;

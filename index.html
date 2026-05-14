@@ -72,15 +72,6 @@
             <input type="text" name="lead_second_last_name" autocomplete="family-name" />
           </label>
           <label>
-            <span data-i18n="f_gender">Gender</span>
-            <select name="lead_gender" required>
-              <option value="" data-i18n="opt_choose">Choose…</option>
-              <option value="F" data-i18n="opt_female">Female</option>
-              <option value="M" data-i18n="opt_male">Male</option>
-              <option value="O" data-i18n="opt_other">Other</option>
-            </select>
-          </label>
-          <label>
             <span data-i18n="f_birth_date">Date of birth</span>
             <input type="date" name="lead_birth_date" required autocomplete="bday" />
           </label>
@@ -102,12 +93,8 @@
             <span data-i18n="f_doc_number">Document number</span>
             <input type="text" name="lead_doc_number" required />
           </label>
-          <label>
-            <span data-i18n="f_doc_expedition">Document issue date</span>
-            <input type="date" name="lead_doc_expedition" required />
-          </label>
           <label class="dni-only">
-            <span data-i18n="f_doc_support">Support number <em data-i18n="dni_only">(DNI/NIE only)</em></span>
+            <span data-i18n="f_doc_support">Support number</span>
             <input type="text" name="lead_doc_support" placeholder="e.g. ABC123456" />
           </label>
         </div>
@@ -228,15 +215,6 @@
           <input type="text" data-name="last_name" required />
         </label>
         <label>
-          <span data-i18n="f_gender">Gender</span>
-          <select data-name="gender" required>
-            <option value="" data-i18n="opt_choose">Choose…</option>
-            <option value="F" data-i18n="opt_female">Female</option>
-            <option value="M" data-i18n="opt_male">Male</option>
-            <option value="O" data-i18n="opt_other">Other</option>
-          </select>
-        </label>
-        <label>
           <span data-i18n="f_birth_date">Date of birth</span>
           <input type="date" data-name="birth_date" required />
         </label>
@@ -257,10 +235,6 @@
         <label>
           <span data-i18n="f_doc_number">Document number</span>
           <input type="text" data-name="doc_number" required />
-        </label>
-        <label>
-          <span data-i18n="f_doc_expedition">Document issue date</span>
-          <input type="date" data-name="doc_expedition" required />
         </label>
         <label>
           <span data-i18n="f_relationship">Relationship to lead guest <em data-i18n="if_minor">(if under 14)</em></span>
